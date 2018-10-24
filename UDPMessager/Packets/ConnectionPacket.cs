@@ -1,13 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace UDPMessager.Packets
+﻿namespace UDPMessager.Packets
 {
     public class ConnectionPacket : Packet
     {
-        public void 
+        public override byte PacketID => 0x01;
+
+        public ConnectionType Type { get; set; }
+        public byte[] PublicKey { get; set; }
+        public int Version { get; set; }
+
+        public override void EncodeBody()
+        {
+            WriteByte((byte) Type);
+            switch (Type)
+            {
+                case ConnectionType.Connecting:
+                    WriteLInt((uint) Version);
+                    WriteBytes(PublicKey);//64byte
+                    break;
+
+                case ConnectionType.ConnectingResponse:
+                    WriteBytes(PublicKey);//64byte
+                    break;
+
+                case ConnectionType.Connected:
+
+                    break;
+            }
+        }
+
+        public override void DecodeBody()
+        {
+            Type = (ConnectionType) ReadByte();
+        }
+
+        public enum ConnectionType : byte
+        {
+            Connecting,
+            ConnectingResponse,
+            Connected
+        }
     }
 }
