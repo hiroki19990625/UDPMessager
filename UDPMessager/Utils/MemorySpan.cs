@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace UDPMessager.Utils
+namespace UDPMessenger.Utils
 {
     public struct MemorySpan : IDisposable
     {

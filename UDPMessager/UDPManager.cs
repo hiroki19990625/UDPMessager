@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Threading;
-using System.Net.Sockets;
 using System.Net;
-using UDPMessager.Events;
+using System.Net.Sockets;
+using System.Threading;
+using UDPMessenger.Events;
 
-namespace UDPMessager
+namespace UDPMessenger
 {
     public class UDPManager : IDisposable
     {

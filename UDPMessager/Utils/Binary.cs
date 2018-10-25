@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace UDPMessager.Utils
+namespace UDPMessenger.Utils
 {
     public sealed class Binary
     {

@@ -1,4 +1,4 @@
-﻿namespace UDPMessager.Packets
+﻿namespace UDPMessenger.Packets
 {
     public class ConnectionPacket : Packet
     {
@@ -31,6 +31,21 @@
         public override void DecodeBody()
         {
             Type = (ConnectionType) ReadByte();
+            switch (Type)
+            {
+                case ConnectionType.Connecting:
+                    WriteLInt((uint) Version);
+                    WriteBytes(PublicKey);//64byte
+                    break;
+
+                case ConnectionType.ConnectingResponse:
+                    WriteBytes(PublicKey);//64byte
+                    break;
+
+                case ConnectionType.Connected:
+
+                    break;
+            }
         }
 
         public enum ConnectionType : byte

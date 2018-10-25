@@ -7,8 +7,8 @@
     <ProjectGuid>{DEEFD101-C3FE-40B6-9ED9-D2ADD4125A6B}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UDPMessager</RootNamespace>
-    <AssemblyName>UDPMessager</AssemblyName>
+    <RootNamespace>UDPMessenger</RootNamespace>
+    <AssemblyName>UDPMessenger</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Events\PacketReceiveEventArgs.cs" />
     <Compile Include="Events\PacketSendEventArgs.cs" />
+    <Compile Include="InteractiveManager.cs" />
     <Compile Include="Packets\ConnectionPacket.cs" />
     <Compile Include="Packets\Packet.cs" />
     <Compile Include="Program.cs" />

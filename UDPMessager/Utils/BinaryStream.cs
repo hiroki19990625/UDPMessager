@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 
-namespace UDPMessager.Utils
+namespace UDPMessenger.Utils
 {
     public class BinaryStream : IDisposable
     {

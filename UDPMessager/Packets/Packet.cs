@@ -1,6 +1,6 @@
-﻿using UDPMessager.Utils;
+﻿using UDPMessenger.Utils;
 
-namespace UDPMessager.Packets
+namespace UDPMessenger.Packets
 {
     public class Packet : BinaryStream
     {

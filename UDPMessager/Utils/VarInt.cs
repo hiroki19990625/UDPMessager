@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace UDPMessager.Utils
+namespace UDPMessenger.Utils
 {
     public static class VarInt
     {
