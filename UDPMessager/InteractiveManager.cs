@@ -34,17 +34,32 @@ namespace UDPMessenger
             Console.Write("Y/n >> ");
             while (true)
             {
-                char c = (char) Console.Read();
-                if (c != '\n' && c!= '\r')
+                string line = Console.ReadLine();
+                bool flag = false;
+                foreach (char c in line)
                 {
-                    if (c == 'Y')
+                    if (c != '\n' && c != '\r')
                     {
-                        return true;
+                        if (c == 'n')
+                        {
+                            return false;
+                        }
+                        else if (c == 'Y')
+                        {
+                            return true;
+                        }
+                        Console.Write("Y/n >> ");
+                        flag = true;
                     }
-                    else if (c == 'n')
+
+                    if (c == '\n' && !flag)
                     {
-                        return false;
+                        Console.Write("Y/n >> ");
                     }
+                }
+
+                if (!flag)
+                {
                     Console.Write("Y/n >> ");
                 }
             }
