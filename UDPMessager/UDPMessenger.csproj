@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\ClientSideAttribute.cs" />
+    <Compile Include="Attributes\ServerSideAttribute.cs" />
     <Compile Include="Events\PacketReceiveEventArgs.cs" />
     <Compile Include="Events\PacketSendEventArgs.cs" />
     <Compile Include="InteractiveManager.cs" />

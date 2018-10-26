@@ -1,4 +1,6 @@
-﻿namespace UDPMessenger.Packets
+﻿using UDPMessenger.Attributes;
+
+namespace UDPMessenger.Packets
 {
     public class ConnectionPacket : Packet
     {
@@ -8,6 +10,7 @@
         public byte[] PublicKey { get; set; }
         public int Version { get; set; }
 
+        [ClientSide, ServerSide]
         public override void EncodeBody()
         {
             WriteByte((byte) Type);
@@ -28,6 +31,7 @@
             }
         }
 
+        [ClientSide, ServerSide]
         public override void DecodeBody()
         {
             Type = (ConnectionType) ReadByte();
