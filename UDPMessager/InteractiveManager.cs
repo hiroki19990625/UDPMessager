@@ -35,7 +35,7 @@ namespace UDPMessenger
             while (true)
             {
                 char c = (char) Console.Read();
-                if (c != '\n')
+                if (c != '\n' && c!= '\r')
                 {
                     if (c == 'Y')
                     {
