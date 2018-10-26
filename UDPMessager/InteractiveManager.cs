@@ -64,5 +64,13 @@ namespace UDPMessenger
                 }
             }
         }
+
+        public static Enum InteractiveMessageEnum(Enum enumData, string message, bool question = false)
+        {
+            Console.WriteLine(message + (question ? "?" : ""));
+            Console.Write(enumData.GetType().Name + " >> ");
+
+            return enumData;
+        }
     }
 }
