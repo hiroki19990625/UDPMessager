@@ -24,6 +24,11 @@ namespace UDPMessenger
             _thread = new Thread(ReceiveLoop);
         }
 
+        public void Start()
+        {
+            _thread.Start();
+        }
+
         private void OnSendEvent(object sender, PacketSendEventArgs args)
         {
             SendEvent?.Invoke(sender, args);

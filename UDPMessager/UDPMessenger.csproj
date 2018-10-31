@@ -43,19 +43,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application.cs" />
     <Compile Include="Attributes\ClientSideAttribute.cs" />
     <Compile Include="Attributes\ServerSideAttribute.cs" />
     <Compile Include="Events\PacketReceiveEventArgs.cs" />
     <Compile Include="Events\PacketSendEventArgs.cs" />
     <Compile Include="InteractiveManager.cs" />
+    <Compile Include="PacketHandler.cs" />
     <Compile Include="Packets\ConnectionPacket.cs" />
     <Compile Include="Packets\Packet.cs" />
+    <Compile Include="Packets\Types\ConnectionType.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Session.cs" />
+    <Compile Include="SessionState.cs" />
     <Compile Include="UDPManager.cs" />
     <Compile Include="Utils\Binary.cs" />
     <Compile Include="Utils\BinaryStream.cs" />
+    <Compile Include="Utils\EncryptionManager.cs" />
     <Compile Include="Utils\MemorySpan.cs" />
+    <Compile Include="Utils\RsaKeys.cs" />
     <Compile Include="Utils\VarInt.cs" />
   </ItemGroup>
   <ItemGroup>

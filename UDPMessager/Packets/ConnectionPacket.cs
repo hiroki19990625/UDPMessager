@@ -1,4 +1,5 @@
 ﻿using UDPMessenger.Attributes;
+using UDPMessenger.Packets.Types;
 
 namespace UDPMessenger.Packets
 {
@@ -7,22 +8,22 @@ namespace UDPMessenger.Packets
         public override byte PacketID => 0x01;
 
         public ConnectionType Type { get; set; }
-        public byte[] PublicKey { get; set; }
+        public string PublicKey { get; set; }
         public int Version { get; set; }
 
         [ClientSide, ServerSide]
-        public override void EncodeBody()
+        protected override void EncodeBody()
         {
             WriteByte((byte) Type);
             switch (Type)
             {
                 case ConnectionType.Connecting:
                     WriteLInt((uint) Version);
-                    WriteBytes(PublicKey);//64byte
+                    WriteString(PublicKey);
                     break;
 
                 case ConnectionType.ConnectingResponse:
-                    WriteBytes(PublicKey);//64byte
+                    WriteString(PublicKey);
                     break;
 
                 case ConnectionType.Connected:
@@ -32,31 +33,24 @@ namespace UDPMessenger.Packets
         }
 
         [ClientSide, ServerSide]
-        public override void DecodeBody()
+        protected override void DecodeBody()
         {
             Type = (ConnectionType) ReadByte();
             switch (Type)
             {
                 case ConnectionType.Connecting:
-                    WriteLInt((uint) Version);
-                    WriteBytes(PublicKey);//64byte
+                    Version = (int) ReadLInt();
+                    PublicKey = ReadString();
                     break;
 
                 case ConnectionType.ConnectingResponse:
-                    WriteBytes(PublicKey);//64byte
+                    PublicKey = ReadString();
                     break;
 
                 case ConnectionType.Connected:
 
                     break;
             }
-        }
-
-        public enum ConnectionType : byte
-        {
-            Connecting,
-            ConnectingResponse,
-            Connected
         }
     }
 }
