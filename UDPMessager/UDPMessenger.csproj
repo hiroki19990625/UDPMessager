@@ -46,6 +46,10 @@
     <Compile Include="Application.cs" />
     <Compile Include="Attributes\ClientSideAttribute.cs" />
     <Compile Include="Attributes\ServerSideAttribute.cs" />
+    <Compile Include="Commands\Command.cs" />
+    <Compile Include="Commands\ConnectionCommand.cs" />
+    <Compile Include="Commands\ExecuteResult.cs" />
+    <Compile Include="Commands\HelpCommand.cs" />
     <Compile Include="Events\PacketReceiveEventArgs.cs" />
     <Compile Include="Events\PacketSendEventArgs.cs" />
     <Compile Include="InteractiveManager.cs" />

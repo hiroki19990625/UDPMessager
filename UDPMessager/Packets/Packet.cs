@@ -24,8 +24,9 @@ namespace UDPMessenger.Packets
 
         public virtual byte PacketID { get; }
 
-        public virtual void Encode()
+        public void Encode()
         {
+            WriteBytes(Magic);
             WriteByte(PacketID);
             EncodeBody();
         }
@@ -35,7 +36,7 @@ namespace UDPMessenger.Packets
 
         }
 
-        public virtual void Decode()
+        public void Decode()
         {
             ReadByte();
             DecodeBody();

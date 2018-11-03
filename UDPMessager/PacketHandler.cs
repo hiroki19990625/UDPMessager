@@ -18,7 +18,6 @@ namespace UDPMessenger
                 Session session = app.GetSession(endPoint);
                 if (session != null && session.State == SessionState.Connected)
                 {
-
                 }
                 else
                 {
