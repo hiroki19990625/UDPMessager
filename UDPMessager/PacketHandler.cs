@@ -7,15 +7,15 @@ namespace UDPMessenger
 {
     public class PacketHandler
     {
-        public void HandlePacket(Application app, IPEndPoint endPoint, Packet packet)
+        public void HandlePacket(IPEndPoint endPoint, Packet packet)
         {
             if (packet is ConnectionPacket)
             {
-                HandleConnectionPacket(app, endPoint, (ConnectionPacket) packet);
+                HandleConnectionPacket(endPoint, (ConnectionPacket) packet);
             }
             else
             {
-                Session session = app.GetSession(endPoint);
+                Session session = Application.Instance.GetSession(endPoint);
                 if (session != null && session.State == SessionState.Connected)
                 {
                 }
@@ -26,24 +26,38 @@ namespace UDPMessenger
             }
         }
 
-        public void HandleConnectionPacket(Application app, IPEndPoint endPoint, ConnectionPacket packet)
+        public void HandleConnectionPacket(IPEndPoint endPoint, ConnectionPacket packet)
         {
             if (packet.Type == ConnectionType.Connecting)
             {
                 if (packet.Version == Packet.ApplicationProtocolVersion)
                 {
-                    app.AddSession(endPoint, new Session(endPoint, packet.PublicKey));
+                    Application.Instance.AddSession(endPoint, new Session(endPoint, packet.PublicKey));
 
                     ConnectionPacket pk = new ConnectionPacket();
                     pk.Type = ConnectionType.ConnectingResponse;
-                    pk.PublicKey = app.Key.PublicKey;
-                    app.SendPacket(endPoint, pk);
+                    pk.PublicKey = Application.Instance.Key.PublicKey;
+                    Application.Instance.SendPacket(endPoint, pk);
+
+                    Console.WriteLine("接続中...");
                 }
+            }
+            else if (packet.Type == ConnectionType.ConnectingResponse)
+            {
+                Application.Instance.AddSession(endPoint, new Session(endPoint, packet.PublicKey));
+
+                ConnectionPacket pk = new ConnectionPacket();
+                pk.Type = ConnectionType.Connected;
+                Application.Instance.SendPacket(endPoint, pk);
+
+                Console.WriteLine("接続の確認中...");
             }
             else if (packet.Type == ConnectionType.Connected)
             {
-                Session session = app.GetSession(endPoint);
+                Session session = Application.Instance.GetSession(endPoint);
                 session.State = SessionState.Connected;
+
+                Console.WriteLine("{0} との接続が確立しました。", endPoint.ToString());
             }
         }
     }

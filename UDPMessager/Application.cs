@@ -14,6 +14,8 @@ namespace UDPMessenger
     {
         private static Application _app;
 
+        public static Application Instance => _app;
+
         public static void Start(params String[] args)
         {
             if (_app == null)
@@ -55,17 +57,50 @@ namespace UDPMessenger
             while (true)
             {
                 string cmd = InteractiveManager.InteractiveMessage("コマンドを入力してください。");
+                if (string.IsNullOrWhiteSpace(cmd))
+                {
+                    Console.WriteLine();
+                    continue;
+                }
+
                 string[] args = cmd.Split(' ');
                 if (_commands.ContainsKey(args[0]))
                 {
-                    _commands[args[0]].ExecuteCommand(args[0], args.Where(s => args[0] != s).ToArray());
+                    try
+                    {
+                        ExecuteResult result = _commands[args[0]]
+                            .ExecuteCommand(args[0], args.Where(s => args[0] != s).ToArray());
+                        if (result == ExecuteResult.Failed)
+                        {
+                            Console.WriteLine("{0} コマンドの実行に失敗しました。", args[0]);
+                            Console.WriteLine();
+                        }
+                        else if (result == ExecuteResult.Error)
+                        {
+                            Console.WriteLine("{0} コマンドの実行中にエラーが発生しました。", args[0]);
+                            Console.WriteLine();
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("コマンド実行中に例外が発生しました。");
+                        Console.WriteLine(e.ToString());
+                        Console.WriteLine();
+                    }
                 }
                 else
                 {
-                    Console.WriteLine(args[0] + " というコマンドはありません。");
+                    if (args[0] == "exit")
+                    {
+                        break;
+                    }
+
+                    Console.WriteLine("{0} というコマンドはありません。", args[0]);
                     Console.WriteLine();
                 }
             }
+
+            Environment.Exit(0);
         }
 
         private void RegisterCommands()
@@ -82,6 +117,11 @@ namespace UDPMessenger
         private void RegisterPackets()
         {
             _packets.Add(1, new ConnectionPacket());
+        }
+
+        public Command[] GetCommands()
+        {
+            return _commands.Values.ToArray();
         }
 
         private Packet GetPacket(byte id)
@@ -124,13 +164,15 @@ namespace UDPMessenger
                 Packet packet = GetPacket(id, stream.ReadBytes());
                 packet.Decode();
 
-                Handler.HandlePacket(this, e.EndPoint, packet);
+                Handler.HandlePacket(e.EndPoint, packet);
                 packet.Clone();
             }
         }
 
         public void SendPacket(IPEndPoint endPoint, Packet packet, bool isEncrypt = false)
         {
+            packet.Encode();
+
             BinaryStream stream = new BinaryStream();
             stream.WriteBool(isEncrypt);
             stream.WriteBytes(packet.ToArray());

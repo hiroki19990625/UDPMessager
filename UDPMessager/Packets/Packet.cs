@@ -1,8 +1,9 @@
-﻿using UDPMessenger.Utils;
+﻿using System;
+using UDPMessenger.Utils;
 
 namespace UDPMessenger.Packets
 {
-    public class Packet : BinaryStream
+    public class Packet : BinaryStream, ICloneable
     {
         public static int ApplicationProtocolVersion { get; } = 1;
 
@@ -45,6 +46,11 @@ namespace UDPMessenger.Packets
         protected virtual void DecodeBody()
         {
 
+        }
+
+        public new object Clone()
+        {
+            return (Packet) this.MemberwiseClone();
         }
     }
 }
