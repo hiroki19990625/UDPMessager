@@ -56,10 +56,9 @@ namespace UDPMessenger
         {
             while (true)
             {
-                string cmd = InteractiveManager.InteractiveMessage("コマンドを入力してください。");
+                string cmd = InteractiveManager.InteractiveMessage();
                 if (string.IsNullOrWhiteSpace(cmd))
                 {
-                    Console.WriteLine();
                     continue;
                 }
 

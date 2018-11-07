@@ -15,16 +15,16 @@ namespace UDPMessenger.Packets
             WriteByte((byte) Type);
             switch (Type)
             {
-                case ConnectionType.Connecting:
+                case ConnectionType.Connecting://Client
                     WriteLInt((uint) Version);
                     WriteString(PublicKey);
                     break;
 
-                case ConnectionType.ConnectingResponse:
+                case ConnectionType.ConnectingResponse://Server
                     WriteString(PublicKey);
                     break;
 
-                case ConnectionType.Connected:
+                case ConnectionType.Connected://Client
 
                     break;
             }
@@ -35,16 +35,16 @@ namespace UDPMessenger.Packets
             Type = (ConnectionType) ReadByte();
             switch (Type)
             {
-                case ConnectionType.Connecting:
+                case ConnectionType.Connecting://Server
                     Version = (int) ReadLInt();
                     PublicKey = ReadString();
                     break;
 
-                case ConnectionType.ConnectingResponse:
+                case ConnectionType.ConnectingResponse://Client
                     PublicKey = ReadString();
                     break;
 
-                case ConnectionType.Connected:
+                case ConnectionType.Connected://Server
 
                     break;
             }

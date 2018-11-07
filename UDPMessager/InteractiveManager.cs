@@ -11,6 +11,11 @@ namespace UDPMessenger
             return Console.ReadLine();
         }
 
+        public static string InteractiveMessage()
+        {
+            return Console.ReadLine();
+        }
+
         public static int InteractiveMessageInt(string message, bool question = false)
         {
             Console.WriteLine(message + (question ? "?" : ""));

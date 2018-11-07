@@ -1,9 +1,10 @@
 ﻿using System;
+using UDPMessenger.Packets.Types;
 using UDPMessenger.Utils;
 
 namespace UDPMessenger.Packets
 {
-    public class Packet : BinaryStream, ICloneable
+    public abstract class Packet : BinaryStream, ICloneable
     {
         public static int ApplicationProtocolVersion { get; } = 1;
 
@@ -24,29 +25,26 @@ namespace UDPMessenger.Packets
         };
 
         public virtual byte PacketID { get; }
+        public QosType Qos { get; set; }
 
         public void Encode()
         {
             WriteBytes(Magic);
             WriteByte(PacketID);
+            WriteByte((byte)Qos);
             EncodeBody();
         }
 
-        protected virtual void EncodeBody()
-        {
-
-        }
+        protected abstract void EncodeBody();
 
         public void Decode()
         {
             ReadByte();
+            Qos = (QosType)ReadByte();
             DecodeBody();
         }
 
-        protected virtual void DecodeBody()
-        {
-
-        }
+        protected abstract void DecodeBody();
 
         public new object Clone()
         {
