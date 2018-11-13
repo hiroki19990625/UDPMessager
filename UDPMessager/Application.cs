@@ -203,10 +203,7 @@ namespace UDPMessenger
 
         public Session GetSession(string name)
         {
-            return this.Sessions.FirstOrDefault((session => {
-                Console.WriteLine(name + "=" + session.Value.Name);
-                return session.Value.Name == name;
-            })).Value;
+            return this.Sessions.FirstOrDefault((session => session.Value.Name == name)).Value;
         }
     }
 }

@@ -16,6 +16,7 @@ namespace UDPMessenger
 
         public Session(IPEndPoint endPoint, string name, string publicKey)
         {
+            EndPoint = endPoint;
             Name = name;
             PublicKey = publicKey;
         }

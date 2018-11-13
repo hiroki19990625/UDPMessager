@@ -65,6 +65,10 @@ namespace UDPMessenger
                 Session session = Application.Instance.GetSession(endPoint);
                 session.State = SessionState.Connected;
 
+                ConnectionPacket pk = new ConnectionPacket();
+                pk.Type = ConnectionType.ConnectedResponse;
+                Application.Instance.SendPacket(endPoint, pk);
+
                 Console.WriteLine("{0} との接続が確立しました。", endPoint.ToString());
             }
             else if (packet.Type == ConnectionType.ConnectedResponse)//Client
