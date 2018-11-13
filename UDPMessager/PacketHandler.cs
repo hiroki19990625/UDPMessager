@@ -13,6 +13,10 @@ namespace UDPMessenger
             {
                 HandleConnectionPacket(endPoint, (ConnectionPacket)packet);
             }
+            else if (packet is DisconnectPacket)
+            {
+                HandleDisconnectPacket(endPoint, (DisconnectPacket)packet);
+            }
             else
             {
                 Session session = Application.Instance.GetSession(endPoint);
@@ -88,6 +92,12 @@ namespace UDPMessenger
         {
             Session session = Application.Instance.GetSession(endPoint);
             Console.WriteLine("[{0} - {1}] {2}", packet.TimeStamp, session.Name, packet.Message);
+        }
+
+        public void HandleDisconnectPacket(IPEndPoint endPoint, DisconnectPacket packet)
+        {
+            Application.Instance.RemoveSession(endPoint);
+            Console.WriteLine("{0} との接続が切断されました。 理由: {1}", endPoint, packet.Reason);
         }
     }
 }

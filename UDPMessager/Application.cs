@@ -42,6 +42,8 @@ namespace UDPMessenger
 
         private void Init()
         {
+            Console.CancelKeyPress += (e, a) => Disconnect();
+
             Handler = new PacketHandler();
             Key = EncryptionManager.GenerateKeys();
 
@@ -95,6 +97,7 @@ namespace UDPMessenger
                 {
                     if (args[0] == "exit")
                     {
+                        Disconnect();
                         break;
                     }
 
@@ -122,6 +125,8 @@ namespace UDPMessenger
         {
             _packets.Add(0x01, new ConnectionPacket());
             _packets.Add(0x03, new ChatPacket());
+
+            _packets.Add(0x10, new DisconnectPacket());
         }
 
         public Command[] GetCommands()
@@ -201,6 +206,11 @@ namespace UDPMessenger
             this.Sessions[endPoint.ToString()] = session;
         }
 
+        public void RemoveSession(IPEndPoint endPoint)
+        {
+            this.Sessions.Remove(endPoint.ToString());
+        }
+
         public Session GetSession(IPEndPoint endPoint)
         {
             if (this.Sessions.ContainsKey(endPoint.ToString()))
@@ -214,6 +224,18 @@ namespace UDPMessenger
         public Session GetSession(string name)
         {
             return this.Sessions.FirstOrDefault((session => session.Value.Name == name)).Value;
+        }
+
+        public void Disconnect()
+        {
+            DisconnectPacket packet = new DisconnectPacket();
+            packet.Reason = "Exit Application";
+            foreach (Session session in Sessions.Values)
+            {
+                SendPacket(session.EndPoint, packet);
+            }
+
+            Sessions.Clear();
         }
     }
 }
