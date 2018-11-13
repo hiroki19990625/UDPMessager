@@ -49,6 +49,7 @@ namespace UDPMessenger.Packets
                     break;
 
                 case ConnectionType.ConnectingResponse://Client
+                    UserName = ReadString();
                     PublicKey = ReadString();
                     break;
 

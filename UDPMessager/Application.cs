@@ -157,7 +157,7 @@ namespace UDPMessenger
             bool isEncrypt = stream.ReadBool();
             if (isEncrypt)
             {
-                stream = new BinaryStream(EncryptionManager.Decrypt(stream.ReadBytes(), GetSession(e.EndPoint).PublicKey));
+                stream = new BinaryStream(EncryptionManager.Decrypt(stream.ReadBytes(), Key.PrivateKey));
             }
 
             byte[] magic = stream.ReadBytes(12);

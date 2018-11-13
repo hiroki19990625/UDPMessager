@@ -28,7 +28,7 @@ namespace UDPMessenger.Commands
                 packet.TimeStamp = DateTime.Now;
                 packet.UUID = Guid.NewGuid();
 
-                Application.Instance.SendPacket(session.EndPoint, packet, true);
+                Application.Instance.SendPacket(session.EndPoint, packet, false);
                 return ExecuteResult.Success;
             }
             else
