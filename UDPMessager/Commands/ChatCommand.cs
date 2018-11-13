@@ -10,7 +10,7 @@ namespace UDPMessenger.Commands
     public class ChatCommand : Command
     {
         public override string Name => "chat";
-        public override string Description => "チャットを送信";
+        public override string Description => "チャットを送信。";
 
         public override ExecuteResult ExecuteCommand(string command, string[] args)
         {

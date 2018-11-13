@@ -74,7 +74,7 @@ namespace UDPMessenger
                     try
                     {
                         ExecuteResult result = _commands[args[0]]
-                            .ExecuteCommand(args[0], args.Where(s => args[0] != s).ToArray());
+                            .ExecuteCommand(args[0], args.Skip(1).ToArray());
                         if (result == ExecuteResult.Failed)
                         {
                             Console.WriteLine("{0} コマンドの実行に失敗しました。", args[0]);
@@ -114,6 +114,8 @@ namespace UDPMessenger
             RegisterCommand(new HelpCommand());
             RegisterCommand(new ConnectionCommand());
             RegisterCommand(new ChatCommand());
+            RegisterCommand(new ScriptCommand());
+            RegisterCommand(new ConfigCommand());
         }
 
         public void RegisterCommand(Command cmd)
@@ -127,6 +129,11 @@ namespace UDPMessenger
             _packets.Add(0x03, new ChatPacket());
 
             _packets.Add(0x10, new DisconnectPacket());
+        }
+
+        public Command GetCommand(string name)
+        {
+            return _commands[name];
         }
 
         public Command[] GetCommands()

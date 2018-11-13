@@ -48,9 +48,11 @@
     <Compile Include="Attributes\ServerSideAttribute.cs" />
     <Compile Include="Commands\ChatCommand.cs" />
     <Compile Include="Commands\Command.cs" />
+    <Compile Include="Commands\ConfigCommand.cs" />
     <Compile Include="Commands\ConnectionCommand.cs" />
     <Compile Include="Commands\ExecuteResult.cs" />
     <Compile Include="Commands\HelpCommand.cs" />
+    <Compile Include="Commands\ScriptCommand.cs" />
     <Compile Include="Events\PacketReceiveEventArgs.cs" />
     <Compile Include="Events\PacketSendEventArgs.cs" />
     <Compile Include="InteractiveManager.cs" />
