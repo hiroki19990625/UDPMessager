@@ -180,10 +180,20 @@ namespace UDPMessenger
 
             BinaryStream stream = new BinaryStream();
             stream.WriteBool(isEncrypt);
-            stream.WriteBytes(packet.ToArray());
-            this.NetworkManager.Send(endPoint, stream.ToArray());
-            stream.Dispose();
-            packet.Dispose();
+            if (isEncrypt)
+            {
+                stream.WriteBytes(EncryptionManager.Encrypt(packet.ToArray(), GetSession(endPoint).PublicKey));
+                this.NetworkManager.Send(endPoint, stream.ToArray());
+                stream.Dispose();
+                packet.Dispose();
+            }
+            else
+            {
+                stream.WriteBytes(packet.ToArray());
+                this.NetworkManager.Send(endPoint, stream.ToArray());
+                stream.Dispose();
+                packet.Dispose();
+            }
         }
 
         public void AddSession(IPEndPoint endPoint, Session session)

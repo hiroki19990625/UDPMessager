@@ -11,7 +11,7 @@ namespace UDPMessenger
         {
             if (packet is ConnectionPacket)
             {
-                HandleConnectionPacket(endPoint, (ConnectionPacket) packet);
+                HandleConnectionPacket(endPoint, (ConnectionPacket)packet);
             }
             else
             {
@@ -20,7 +20,11 @@ namespace UDPMessenger
                 {
                     if (packet is ChatPacket)
                     {
-                        HandleChatPacket(endPoint, (ChatPacket) packet);
+                        HandleChatPacket(endPoint, (ChatPacket)packet);
+                    }
+                    else
+                    {
+                        Console.WriteLine("ハンドルされていないパケットを受信しました。");
                     }
                 }
                 else
