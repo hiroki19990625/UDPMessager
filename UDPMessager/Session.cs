@@ -10,12 +10,14 @@ namespace UDPMessenger
     public class Session
     {
         public IPEndPoint EndPoint { get; }
+        public string Name { get; }
         public string PublicKey { get; }
         public SessionState State { get; set; } = SessionState.Connecting;
 
-        public Session(IPEndPoint endPoint, string publicKey)
+        public Session(IPEndPoint endPoint, string name, string publicKey)
         {
-            this.PublicKey = publicKey;
+            Name = name;
+            PublicKey = publicKey;
         }
     }
 }

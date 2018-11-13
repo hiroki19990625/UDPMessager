@@ -17,6 +17,7 @@ namespace UDPMessenger.Commands
                 ConnectionPacket packet = new ConnectionPacket();
                 packet.Type = ConnectionType.Connecting;
                 packet.Version = Packet.ApplicationProtocolVersion;
+                packet.UserName = Application.Instance.UserName;
                 packet.PublicKey = Application.Instance.Key.PublicKey;
 
                 Application.Instance.SendPacket(endPoint, packet);

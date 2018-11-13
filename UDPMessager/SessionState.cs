@@ -8,6 +8,7 @@ namespace UDPMessenger
 {
     public enum SessionState
     {
+        Free,
         Connecting,
         Connected
     }

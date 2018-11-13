@@ -46,6 +46,7 @@
     <Compile Include="Application.cs" />
     <Compile Include="Attributes\ClientSideAttribute.cs" />
     <Compile Include="Attributes\ServerSideAttribute.cs" />
+    <Compile Include="Commands\ChatCommand.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\ConnectionCommand.cs" />
     <Compile Include="Commands\ExecuteResult.cs" />

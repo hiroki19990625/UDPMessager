@@ -10,6 +10,7 @@ namespace UDPMessenger.Packets.Types
     {
         Connecting,
         ConnectingResponse,
-        Connected
+        Connected,
+        ConnectedResponse
     }
 }

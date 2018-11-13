@@ -7,6 +7,7 @@ namespace UDPMessenger.Packets
         public override byte PacketID => 0x01;
 
         public ConnectionType Type { get; set; }
+        public string UserName { get; set; }
         public string PublicKey { get; set; }
         public int Version { get; set; }
 
@@ -17,14 +18,20 @@ namespace UDPMessenger.Packets
             {
                 case ConnectionType.Connecting://Client
                     WriteLInt((uint) Version);
+                    WriteString(UserName);
                     WriteString(PublicKey);
                     break;
 
                 case ConnectionType.ConnectingResponse://Server
+                    WriteString(UserName);
                     WriteString(PublicKey);
                     break;
 
                 case ConnectionType.Connected://Client
+
+                    break;
+
+                case ConnectionType.ConnectedResponse://Server
 
                     break;
             }
@@ -37,6 +44,7 @@ namespace UDPMessenger.Packets
             {
                 case ConnectionType.Connecting://Server
                     Version = (int) ReadLInt();
+                    UserName = ReadString();
                     PublicKey = ReadString();
                     break;
 
@@ -45,6 +53,10 @@ namespace UDPMessenger.Packets
                     break;
 
                 case ConnectionType.Connected://Server
+
+                    break;
+
+                case ConnectionType.ConnectedResponse://Client
 
                     break;
             }

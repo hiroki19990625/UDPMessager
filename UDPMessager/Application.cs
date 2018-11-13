@@ -33,6 +33,7 @@ namespace UDPMessenger
         public UDPManager NetworkManager { get; private set; }
         public PacketHandler Handler { get; private set; }
         public RsaKeys Key { get; internal set; }
+        public string UserName { get; set; }
 
         public Dictionary<string, Session> Sessions { get; } = new Dictionary<string, Session>();
 
@@ -54,6 +55,9 @@ namespace UDPMessenger
 
         private void Loop()
         {
+            UserName = InteractiveManager.InteractiveMessage("名前を入力してください。");
+            Console.WriteLine("コマンドを入力してください。(helpで確認出来ます。)");
+
             while (true)
             {
                 string cmd = InteractiveManager.InteractiveMessage();
@@ -106,6 +110,7 @@ namespace UDPMessenger
         {
             RegisterCommand(new HelpCommand());
             RegisterCommand(new ConnectionCommand());
+            RegisterCommand(new ChatCommand());
         }
 
         public void RegisterCommand(Command cmd)
@@ -115,7 +120,8 @@ namespace UDPMessenger
 
         private void RegisterPackets()
         {
-            _packets.Add(1, new ConnectionPacket());
+            _packets.Add(0x01, new ConnectionPacket());
+            _packets.Add(0x03, new ChatPacket());
         }
 
         public Command[] GetCommands()
@@ -164,7 +170,7 @@ namespace UDPMessenger
                 packet.Decode();
 
                 Handler.HandlePacket(e.EndPoint, packet);
-                packet.Clone();
+                packet.Dispose();
             }
         }
 
@@ -193,6 +199,14 @@ namespace UDPMessenger
             }
 
             return null;
+        }
+
+        public Session GetSession(string name)
+        {
+            return this.Sessions.FirstOrDefault((session => {
+                Console.WriteLine(name + "=" + session.Value.Name);
+                return session.Value.Name == name;
+            })).Value;
         }
     }
 }
